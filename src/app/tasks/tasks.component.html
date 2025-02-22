@@ -4,8 +4,10 @@
         <menu><button>Add Task</button></menu>
     </header>
     <ul>
-        <li>
-            <app-task />
-        </li>
+        @for (task of selectedUserTasks; track task.id) {
+            <li>
+                <app-task />
+            </li>
+        }
     </ul>
 </section>

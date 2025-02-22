@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 
 import { DUMMY_USERS } from '../dummy-users';
-
-const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
+import { GenerateRandomIndex } from '../shared/utils/randomindex';
 
 @Component({
   selector: 'app-user',
@@ -11,13 +10,12 @@ const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
   styleUrl: './user.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserComponent { 
-  selectedUser = DUMMY_USERS[randomIndex];
-
-  get pathImage() { return 'assets/users/' + this.selectedUser.avatar };
+export class UserComponent {
+  //Angular detects the changes to the signal and what is being computed to re-render the component.
+  selectedUser = signal(DUMMY_USERS[GenerateRandomIndex(DUMMY_USERS?.length ?? 0)]);
+  pathImage = computed(() => 'assets/users/' + this.selectedUser().avatar);
 
   onSelectedUser(){
-    const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
-    this.selectedUser = DUMMY_USERS[randomIndex];
+    this.selectedUser.set(DUMMY_USERS[GenerateRandomIndex(DUMMY_USERS?.length ?? 0)]);
   }
 }

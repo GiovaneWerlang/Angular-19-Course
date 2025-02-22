@@ -9,8 +9,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 export class UserComponent {
 
-  @Input('avatar') avatar!:string;
-  @Input('name') name!:string;
+  @Input({required: true}) avatar!:string;
+  @Input({required: true}) name!:string;
 
   get pathImage(){
     return 'assets/users/' + this.avatar;

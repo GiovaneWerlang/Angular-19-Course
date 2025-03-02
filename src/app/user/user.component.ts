@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from './models/user.model';
-import { CardComponent } from "../shared/card/card.component";
 
 @Component({
   selector: 'app-user',
-  imports: [CardComponent],
+  standalone: false,
   templateUrl: './user.component.html',
   styleUrl: './user.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

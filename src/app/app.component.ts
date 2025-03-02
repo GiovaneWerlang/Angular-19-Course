@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { UserInputComponent } from './user-input/user-input.component';
 import { CalculateData } from './user-input/models/calculate-date.model';
@@ -14,7 +14,7 @@ import { Results } from './investment-result/models/results.model';
 })
 export class AppComponent {
 
-  resultsData?: Results[] = [];
+  resultsData = signal<Results[]>([]);
 
   onCalculateInvestmentResults(data: CalculateData) {
     const {
@@ -42,7 +42,7 @@ export class AppComponent {
       });
     }
 
-    this.resultsData = annualData;
+    this.resultsData.set(annualData);
   }
 
 }

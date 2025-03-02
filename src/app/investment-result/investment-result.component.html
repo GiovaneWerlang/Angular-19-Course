@@ -1,16 +1,26 @@
-<p>Enter the values and press Calculate.</p>
-
-<table>
-    <thead>
-        <tr>
-            <th>Year</th>
-            <th>Investment value</th>
-            <th>Interest (Year)</th>
-            <th>Total interest</th>
-            <th>Invested Capital</th>
-        </tr>
-    </thead>
-    <tbody>
-        
-    </tbody>
-</table>
+@if (!results?.length){
+    <p class="center">Enter the values and press Calculate.</p>
+} @else {
+    <table>
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Investment value</th>
+                <th>Interest (Year)</th>
+                <th>Total interest</th>
+                <th>Invested Capital</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (result of results; track result.year) {
+                <tr>
+                    <td>{{ result.year }}</td>
+                    <td>{{ result.valueEndOfYear }}</td>
+                    <td>{{ result.interest }}</td>
+                    <td>{{ result.totalInterest }}</td>
+                    <td>{{ result.totalAmountInvested }}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

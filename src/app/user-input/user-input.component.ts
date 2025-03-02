@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CalculateData } from './models/calculate-date';
+import { CalculateData } from './models/calculate-date.model';
 
 @Component({
   selector: 'app-user-input',

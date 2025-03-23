@@ -3,7 +3,7 @@
         @for (ticket of tickets; track ticket.id) {
             Count: {{ $count }}
             <li>
-                <app-ticket /> First: {{ $first }} - Last: {{ $last }} - Even: {{ $even }} - Odd: {{ $odd }}
+                <app-ticket [data]="ticket"/> First: {{ $first }} - Last: {{ $last }} - Even: {{ $even }} - Odd: {{ $odd }}
             </li>
         } @empty {
             <p>No tickets added yet.</p>

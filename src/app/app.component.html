@@ -7,8 +7,11 @@
   <!-- @if (isAdmin()) {
     <p>Only admin</p>
   } -->
-  <ng-template appAuth="admin">
+  <!-- <ng-template appAuth="admin">
     <p>Only admin</p>
-  </ng-template>
+  </ng-template> -->
+  <p *appAuth="'admin'" class="protected-content admin">Only admin</p>
+  <p *appAuth="'user'" class="protected-content authenticated">Only regular user</p>
+  <p *appAuth="'guest'" class="protected-content unauthenticated">Only guest user</p>
 
 </main>

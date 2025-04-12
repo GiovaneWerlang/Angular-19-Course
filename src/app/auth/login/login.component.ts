@@ -1,46 +1,38 @@
-import { afterNextRender, Component, DestroyRef, inject, viewChild } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { debounceTime } from 'rxjs';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  imports: [ FormsModule ]
+  imports: [ReactiveFormsModule]
 })
 export class LoginComponent {
+  form = new FormGroup({
+    email: new FormControl('', { validators: [Validators.required, Validators.email] }),
+    password: new FormControl('', { validators: [Validators.required, Validators.minLength(6)] })
+  });
 
-  private form = viewChild<NgForm>('form');
-  private destroyRef = inject(DestroyRef);
-
-  constructor(){
-    afterNextRender(() => {
-      const savedForm = window.localStorage.getItem('login-email');
-      if(savedForm){
-        const formData = JSON.parse(savedForm);
-        setTimeout(() => {
-          this.form()?.controls['email'].setValue(formData.email);
-        }, 1);
-      }
-
-      const subscription = this.form()?.valueChanges?.pipe(debounceTime(500))
-      .subscribe({
-        next: (value) => window.localStorage.setItem('login-email', JSON.stringify({ email: value.email}))
-      });
-      this.destroyRef.onDestroy(() => subscription?.unsubscribe());
-    });
+  get emailIsInvalid() {
+    return (
+      this.form.controls.email.touched &&
+      this.form.controls.email.dirty &&
+      this.form.controls.email.invalid
+    );
   }
 
-  onSubmit(formData: NgForm) {
-    if(formData.form.invalid){
-      return;
-    }
-    const email = formData.form.value.email;
-    const password = formData.form.value.password;
+  get passwordIsInvalid() {
+    return (
+      this.form.controls.password.touched &&
+      this.form.controls.password.dirty &&
+      this.form.controls.password.invalid
+    );
+  }
+
+  onSubmit() {
+    const email = this.form.controls.email.value;
+    const password = this.form.controls.password.value;
     console.log(email, password)
-
-    formData.form.reset();
   }
-
 }
